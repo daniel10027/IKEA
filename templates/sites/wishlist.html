@@ -1,0 +1,85 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <!--wishlist table start-->
+    <div class="ptb-120 bg-white">
+        <div class="container">
+            <div class="wishlist-table table-responsive">
+                <table class="table">
+                    <tr>
+                        <th class="text-uppercase">Product Name</th>
+                        <th class="text-uppercase">Price</th>
+                        <th class="text-uppercase">Stock Status</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-4 product-box">
+                                <button type="button" class="remove_product"><i class="fas fa-close"></i></button>
+                                <div class="feature-image light-bg">
+                                    <img src="{% static 'sites/assets/images/products/chair-pd.png' %}" class="img-fluid" alt="feature image">
+                                </div>
+                                <div>
+                                    <span class="fs-sm text-uppercase secondary-text-color d-block">Chair</span>
+                                    <a href="#" class="product-title h6 mt-2 d-block">Smart  Chair</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>$550.55</td>
+                        <td>
+                            <div class="stock-status d-flex align-items-center justify-content-between">
+                                <span>Out of stock</span>
+                                <button type="button" class="template-btn primary-btn text-uppercase fs-sm"><span>Add to Cart</span></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-4 product-box">
+                                <button type="button" class="remove_product"><i class="fas fa-close"></i></button>
+                                <div class="feature-image light-bg">
+                                    <img src="{% static 'sites/assets/images/products/chair-pd.png' %}" class="img-fluid" alt="feature image">
+                                </div>
+                                <div>
+                                    <span class="fs-sm text-uppercase secondary-text-color d-block">Wood</span>
+                                    <a href="#" class="product-title h6 mt-2 d-block">Wooded Weardrobe</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>$250.55</td>
+                        <td>
+                            <div class="stock-status d-flex align-items-center justify-content-between">
+                                <span>In stock</span>
+                                <button type="button" class="template-btn primary-btn text-uppercase fs-sm"><span>Add to Cart</span></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-4 product-box">
+                                <button type="button" class="remove_product"><i class="fas fa-close"></i></button>
+                                <div class="feature-image light-bg">
+                                    <img src="{% static 'sites/assets/images/products/chair-pd.png' %}" class="img-fluid" alt="feature image">
+                                </div>
+                                <div>
+                                    <span class="fs-sm text-uppercase secondary-text-color d-block">Plated</span>
+                                    <a href="#" class="product-title h6 mt-2 d-block">Wooden Table</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>$150.55</td>
+                        <td>
+                            <div class="stock-status d-flex align-items-center justify-content-between">
+                                <span>In stock</span>
+                                <button type="button" class="template-btn primary-btn text-uppercase fs-sm"><span>Add to Cart</span></button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--wishlist table end-->
+
+    {% endblock content %}

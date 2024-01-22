@@ -1,0 +1,84 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+    <!--breadcrumb section start-->
+    <div class="breadcrumb-section pt-40 pb-40">
+        <div class="container-1700">
+            <p class="breadcrumb-text mb-0"><a href="{% url 'index' %}">Accueil</a> / <span class="text-main-color">Mon Panier</span></p>
+        </div>
+    </div>
+    <!--breadcrumb section end-->
+
+
+    <!---cart table start-->
+    <div class="ptb-120 bg-white">
+        <div class="container">
+            <div class="cart-table-wrapper table-responsive">
+                <table class="cart-table table">
+
+                    <tr>
+                        <th class="text-center">Produit <b>({{order.get_cart_items}})</b></th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th class="text-end">Sous Total</th>
+                    </tr>
+                    
+                    
+                    {% for item in items  %}
+
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-4 product-box">
+                                <button data-product={{item.Produit.id}} data-action="delete" type="button" class=" update-cart remove_product"><i class="fas fa-close"></i></button>
+                                <div class="feature-image light-bg">
+                                    <img src="{{item.Produit.imageUrl}}" class="img-fluid" alt="product">
+                                </div>
+                                <div>
+                                    <span class="fs-sm text-uppercase secondary-text-color d-block">{{item.Produit.categorie | capfirst}}</span>
+                                    <a href="{{item.Produit.url}}" class="product-title h6 mt-2 d-block">{{item.Produit.titre | capfirst}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-medium text-main-color">{{item.price | intcomma}} XOF</span>
+                        </td>
+                        <td>
+                            <div class="quantity d-flex align-items-center">
+                                <input type="text" value="{{item.quantity}}">
+                                <div class="step-btns">
+                                    <button  data-product={{item.Produit.id}} data-action="add" class="increment update-cart"><i class="fa-solid fa-angle-up"></i></button>
+                                    <button  data-product={{item.Produit.id}} data-action="remove" class="decrement update-cart"><i class="fa-solid fa-angle-down"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-main-color fw-medium d-block text-end">{{item.get_total | intcomma}} XOF</span>
+                        </td>
+                    </tr>
+                        
+                    {% endfor %}
+                        
+               
+                    <tr>
+                        <td colspan="4">
+                            <div class="d-flex align-items-center justify-content-between gap-4 flex-wrap" style="float:right">
+                                <form class="cart-coupon-form d-flex align-items-center">
+                                    Total : <a href="#" class="product-title h6 mt-2 d-block">{{order.get_cart_total | intcomma}} XOF </a>
+                                    <a style="background-color:orange" href="{% url 'checkout' %}" type="button" class="submit-btn template-btn primary-btn">Valider mon panier </a>
+                                </form>
+                            
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <!--cart table end-->
+
+   
+    {% endblock content %}

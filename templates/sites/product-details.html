@@ -1,0 +1,276 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+<style>
+
+    model-viewer{
+        width:650px;
+        height:650px;
+   }
+    
+#product_view2 .modal-dialog {
+    max-width: 1300px;
+  }
+  
+  #product_view2 .modal-dialog .modal-content {
+    padding: 24px;
+  }
+  
+  #product_view2 .modal-dialog .btn-close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    z-index: 2;
+  }
+  
+  #product_view2 .modal-dialog .vr-product-thumb {
+    height: 560px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  
+</style>
+
+
+
+    <!--product details start-->
+    <section class="vr-prodcuct-details ptb-140">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="vr-product-double-slider">
+                        <div class="vr-product-thumb position-relative">
+                          {% if produit.en_promo %}
+                          <span style="background-color:orange" class="badge sale-badge">-{{produit.pourcentage_promo}}%</span>
+                          {% endif %}
+                            <div class="vr-poroduct-single-slider">
+                                <div class="single-item text-center">
+                                    <span class="zoom-on-hover d-inline-block">
+                                        <img src="{{produit.imageUrl}}" alt="product" class="img-fluid mood-multiply d-inline-block">
+                                    </span>
+                                    
+                                </div>
+                               
+                               {% for image in produit.images %}
+
+                               <div class="single-item text-center">
+                                <span class="zoom-on-hover d-inline-block">
+                                    <img src="{{image.image.url}}" alt="product" class="img-fluid mood-multiply d-inline-block">
+                                </span>
+                            </div>
+                                
+                               {% endfor %}
+                                
+                              
+                            </div>
+                        </div>
+                        <div class="vr-product-thumb-control mt-4">
+                            <div class="single-item text-center">
+                                <img src="{{produit.imageUrl}}" alt="product" class="img-fluid mood-multiply">
+                            </div>
+                           
+                           {% for image in produit.images  %}
+                           <div class="single-item text-center">
+                            <img src=" {{image.image.url}}" alt="product" class="img-fluid mood-multiply">
+                        </div>
+                           {% endfor %}
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="vr-product-details-content mt-5 mt-xl-0">
+                        <h3 class="mb-4 fw-semibold">{{produit.titre | capfirst}}</h3>
+                        <div class="product-rating">
+                            <ul class="rating-star d-inline-flex">
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                            </ul>
+                            <span class="fs-sm"></span>
+                            <!-- Button trigger modal -->
+
+                        </div>
+                        <h5 class="mb-0 mt-30">{{produit.prix | intcomma}} XOF</h5>  
+                        {% comment %} <del class="ms-1 text-color">$2100</del> {% endcomment %}
+                        <p class="mb-40 mt-30">{{produit.description | safe }}</p>
+                       
+                        <div class="d-flex align-items-center mt-30 gap-3">
+                            <div class="quantity-box">
+                                <button  data-product={{produit.id}} data-action="remove" type="button"  class="update-cart drecrement"><i class="fa-solid fa-minus"></i></button>
+                                <input type="text" value="1">
+                                <button data-product={{produit.id}} data-action="add" type="button" class=" update-cart drecrement"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            <a style="background-color:orange" data-product={{produit.id}} data-action="add" class="update-cart template-btn primary-btn fs-sm text-uppercase h-40">Ajouter</a>
+                            <br>
+
+                          
+                          {% if produit.fichier_3d %}
+
+                          <a
+                          href="#product_view2" 
+                          data-bs-toggle="modal2"
+                          data-titre="{{produit.titre | capfirst}}"
+                          data-prix="{{produit.prix | intcomma}} XOF"
+                          data-description="{{produit.description | safe}}"
+                          data-image="{{produit.imageUrl}}"
+                          data_url="{{produit.url}}"
+                          style="background-color:orange;color:white;" class="pip-btn_inner btn btn-lg">
+                          <svg focusable="false" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" style="color:white" class="pip-svg-icon pip-btnicon"><path d="M11 16.9766c.3294.0154.663.0233 1 .0233 2.2351 0 4.3234-.3458 6-.9495 1.7881-.6438 4-1.8975 4-4.0505 0-1.9568-1.8939-3.1985-3.5147-3.864l-1.5605 1.5606C17.8623 9.9943 20 10.7292 20 11.9999c0 .9329-1.2789 1.5728-2 1.8958-1.8614.8335-3.9768 1.1042-6 1.1042-.3392 0-.6729-.0088-1-.0257v-1.9743l-3 3 3 3v-2.0233zm2-9.9532A21.3903 21.3903 0 0 0 12.0001 7c-2.235 0-4.3234.3457-6 .9494-1.7881.6438-4 1.8976-4 4.0506 0 1.9568 1.894 3.1984 3.5146 3.8639l1.5606-1.5605C6.1378 14.0057 4 13.2707 4 12.0001c0-.9329 1.2789-1.5729 2-1.8958 1.8614-.8336 3.9767-1.1042 6-1.1042.3392 0 .6729.0087.9999.0257V11l3-3-3-3v2.0234z"></path>
+                          </svg>
+                          <span class="pip-btn_label"> Visualiser en 3D</span>
+                          </a>
+
+                            
+                          {% endif %}
+                            
+                           
+
+                        </div>
+                      
+                        <ul class="product-meta mt-32">
+                            <li>SKU:{{produit.slug | upper }}-{{produit.id}}</li>
+                            <li>Categories: {{produit.categorie | upper }}</li>
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!---product details end-->
+
+
+    <!--footer section end-->
+
+        <!-- Modal -->
+        <div class="modal fade" id="product_view2">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="vr-product-double-slider">
+                                <div class="vr-product-thumb position-relative">
+                                    {% if produit.en_promo %}
+                                    <span class="badge sale-badge">-{{produit.pourcentage_promo}}%</span>
+                                    {% endif %}
+                                    <div class="vr-poroduct-single">
+                                        
+                                        {% if produit.fichier_3d %}
+                                        <model-viewer  
+                                        
+                                        id="description3d"
+                                        src = "{{produit.fichier_3d.url}}"
+                                        camera-controls
+                                        autoplay
+                                        >
+                                            
+                                        </model-viewer>
+
+                                        {% else %}
+                                        <img id="productModalImage" alt="product" class="img-fluid mood-multiply d-inline-block">
+                                        {% endif %}
+                                            
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="vr-product-details-content mt-5 mt-xl-0">
+                                <h3 id="productModalTitle" class="mb-4 fw-semibold"></h3>
+                                <div class="product-rating">
+                                    <ul class="rating-star d-inline-flex">
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                    </ul>
+                                    <span class="fs-sm"></span>
+                                </div>
+                                <h5 id="productModalPrice" class="mb-0 mt-30"></h5>
+                                <p id="productModalDescription" class="mb-40 mt-30"></p>
+                                {% comment %} <div class="color-variant">
+                                    <span class="fs-sm text-uppercase text-main-color fw-medium">Color</span>
+                                    <ul class="color-list mt-20">
+                                        <li class="red"><a href="#"></a></li>
+                                        <li class="blue"><a href="#"></a></li>
+                                        <li class="green"><a href="#"></a></li>
+                                    </ul> {% endcomment %}
+                                </div>
+                                <div class="d-flex align-items-center mt-30 gap-3">
+                                    <div class="quantity-box">
+                                        <button type="button" class="drecrement"><i class="fa-solid fa-minus"></i></button>
+                                        <input type="text" value="1">
+                                        <button type="button" class="drecrement"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                    <a id="productModalUrl" href="#" class="template-btn primary-btn fs-sm text-uppercase h-40">Détails</a>
+                                </div>
+                                <a href="#" class="pd-wishlist-btn text-uppercase mt-30"><i class="fa-regular fa-heart"></i>Ajouter à la liste de souhait</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal End-->
+
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var productModal = new bootstrap.Modal(document.getElementById('product_view2'));
+        
+                // Sélectionner tous les boutons qui ouvrent le modal
+                var detailButtons = document.querySelectorAll('[data-bs-toggle="modal2"]');
+        
+                // Ajouter un gestionnaire d'événement à chaque bouton
+                detailButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        // Récupérer les données à partir des attributs data-*
+                        var titre = this.getAttribute('data-titre');
+                        var prix = this.getAttribute('data-prix');
+                        var description = this.getAttribute('data-description');
+                        var image = this.getAttribute('data-image');
+                        var url = this.getAttribute('data-url');
+        
+                        // Mettre à jour le contenu du modal avec les données
+                      
+                      {% if produit.fichier_3d %}
+
+                        document.getElementById('productModalImage').src = image;
+                        
+                      {% endif %}
+                        
+                        document.getElementById('productModalUrl').href = url;
+                        document.getElementById('productModalTitle').innerText = titre;
+                        document.getElementById('productModalPrice').innerText = prix;
+                        document.getElementById('productModalDescription').innerText = description;
+        
+                        // Afficher le modal
+                        productModal.show();
+                    });
+                });
+            });
+        </script>
+        
+
+{% endblock content %}

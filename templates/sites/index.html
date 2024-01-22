@@ -1,0 +1,285 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+    {% comment %} <!--hero section start-->
+    <section class="hm2-hero-section position-relative z-1 overflow-hidden">
+        <div class="container position-relative">
+            <span class="spring-text">Spring / Summer 2022</span>
+            <div class="hm2-hero-slider slider-spacing">
+                <div class="hm2-hero-single">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-xl-5 col-lg-9">
+                            <div class="hm2-hero-left">
+                                <span class="hm2-hero-subtitle text-white hm2-font-family">Limited</span>
+                                <h1 class="mb-50 text-white hm2-font-family">Edition</h1>
+                                <p class="mb-50">Sapien id lacus inceptos arcu cum mus eros curae, curabitur rutrum torquent euisociosqu commodo, fermentum vel litora platea tortor urna mollis scelerisque</p>
+                                <a href="#" class="template-btn white-btn hover-text-white">View Collections</a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 offset-xl-1">
+                            <div class="hm2-hero-right position-relative">
+                                <span class="text-white subtitle">New Arrival</span>
+                                <img src="{% static 'sites/assets/images/home-2/chair.png' %}" alt="chair" class="img-fluid">
+                                <div class="products-info-box position-absolute">
+                                    <span class="dot"></span>
+                                    <div class="info-box">
+                                        <a href="#"><h5 class="mb-2">Lviano Chair</h5></a>
+                                        <p class="fw-medium text-main-color mb-4">$256.39</p>
+                                        <a href="#" class="template-btn primary-btn btn-sm text-uppercase">View Item</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hm2-hero-single">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-xl-5 col-lg-9">
+                            <div class="hm2-hero-left">
+                                <span class="hm2-hero-subtitle text-white hm2-font-family">Limited</span>
+                                <h1 class="mb-50 text-white hm2-font-family">Edition</h1>
+                                <p class="mb-50">Sapien id lacus inceptos arcu cum mus eros curae, curabitur rutrum torquent euisociosqu commodo, fermentum vel litora platea tortor urna mollis scelerisque</p>
+                                <a href="#" class="template-btn white-btn hover-text-white">View Collections</a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 offset-xl-1">
+                            <div class="hm2-hero-right position-relative">
+                                <span class="text-white subtitle">New Arrival</span>
+                                <img src="{% static 'sites/assets/images/home-2/chair.png' %}" alt="chair" class="img-fluid">
+                                <div class="products-info-box position-absolute">
+                                    <span class="dot"></span>
+                                    <div class="info-box">
+                                        <a href="#"><h5 class="mb-2">Lviano Chair</h5></a>
+                                        <p class="fw-medium text-main-color mb-4">$256.39</p>
+                                        <a href="#" class="template-btn primary-btn btn-sm text-uppercase">View Item</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="vintage">vintage</span>
+    </section>
+    <!--hero section end--> {% endcomment %}
+
+    <!--products filter start-->
+    <section class="hm2-filter-products ptb-140">
+        <div class="container-1400">
+            <div class="row align-items-center">
+                <div class="col-xl-5">
+                    <div class="section-title text-center text-xl-start mb-32 mb-xl-0">
+                        <h2 class="fs-40 hm2-font-family">Nos Produits</h2>
+                    </div>
+                </div>
+                <div class="col-xl-7">
+                    <div class="hm2-filter-btn-group d-flex align-items-center justify-content-center justify-content-xl-end flex-wrap">
+                        <button data-filter="*" class="active">Tout</button>
+                        
+                        {% for categorie in categories  %}
+                        <button data-filter=".{{categorie.slug}}">{{categorie.titre | capfirst}}</button>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 hm2-grid mt-5">
+                
+                
+                {% for produit in produits  %}
+
+                <div class="col-xl-4 col-md-6 {{produit.categorie.slug}}">
+                    <div class="vr-product-card wow fadeInUp">
+                        <div class="feature-thumb position-relative">
+                            <a href="{{produit.url}}">
+                                <img src="{{produit.imageUrl}}" alt="thumbnail" class="feature-thumbnail thumb" />
+                              
+
+                                {% for image in produit.images  %}
+
+                                {% if forloop.first %}
+                                <img src="{{image.image.url}}" alt="thumbnail" class="feature-thumbnail thumb-hover" />
+                                {% endif %}
+                            
+                          {% endfor %}
+                            </a>
+                           {% if produit.en_promo %}
+                           <span style="background-color:orange"class="rectangle-badge primary">-{{produit.pourcentage_promo}}%</span>
+                           {% endif %}
+                            <div style="background-color:orange" class="action-box primary-bg-color">
+                                <a data-product={{produit.id}} data-action="add" class="update-cart" >
+                                    <span class="tooltip-text">Ajouter au Panier</span>
+                                    <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13.6093 5C13.6093 2.79086 11.8185 1 9.60933 1C7.40019 1 5.60933 2.79086 5.60933 5M17.0546 7.67395L17.988 13.274C18.2016 14.5559 18.3087 15.1968 18.1232 15.6964C17.9604 16.1347 17.6493 16.5022 17.2437 16.7349C16.7814 17 16.1313 17 14.8317 17H4.38667C3.08705 17 2.43778 17 1.97554 16.7349C1.56991 16.5022 1.25815 16.1347 1.09533 15.6964C0.909784 15.1968 1.01677 14.5559 1.23042 13.274L2.16376 7.67395C2.32209 6.72398 2.40151 6.24902 2.63854 5.89258C2.84748 5.57838 3.14103 5.32965 3.48531 5.17521C3.87586 5 4.35719 5 5.32027 5H13.8987C14.8617 5 15.343 5 15.7336 5.17521C16.0778 5.32965 16.3711 5.57838 16.58 5.89258C16.8171 6.24902 16.8963 6.72399 17.0546 7.67395Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                                <a href="#product_view" 
+                                data-bs-toggle="modal"
+                                data-titre="{{produit.titre | capfirst}}"
+                                data-prix="{{produit.prix | intcomma}} XOF"
+                                data-description="{{produit.description | safe}}"
+                                data-image="{{produit.imageUrl}}"
+                                data_url="{{produit.url}}"
+                                
+                                >
+                                    <span class="tooltip-text">Vue Rapide</span>
+                                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.8712 11.7359L16.31 15.1739L15.1739 16.31L11.7359 12.8712C10.4567 13.8967 8.86556 14.4544 7.22605 14.4521C3.23727 14.4521 0 11.2148 0 7.22605C0 3.23727 3.23727 0 7.22605 0C11.2148 0 14.4521 3.23727 14.4521 7.22605C14.4544 8.86556 13.8967 10.4567 12.8712 11.7359ZM11.2606 11.1402C12.2796 10.0923 12.8486 8.68766 12.8463 7.22605C12.8463 4.12045 10.3308 1.60579 7.22605 1.60579C4.12045 1.60579 1.60579 4.12045 1.60579 7.22605C1.60579 10.3308 4.12045 12.8463 7.22605 12.8463C8.68766 12.8486 10.0923 12.2796 11.1402 11.2606L11.2606 11.1402Z" fill="#F8F8F8"/>
+                                    </svg>
+                                </a>
+
+                               
+
+                                
+                               
+                            </div>
+                        </div>
+                        <div class="card-bottom mt-30 d-flex align-items-center justify-content-between gap-4">
+                            <div>
+                                <a href="{{produit.url}}"><h5 class="mb-3">{{produit.titre | capfirst }}</h5></a>
+                                <span class="fw-medium text-main-color">{{produit.prix | intcomma }} XOF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                {% endfor %}
+                    
+              
+            </div>
+        </div>
+    </section>
+    <!--products filter end-->
+
+    <!--brands section start-->
+    <div class="hm2-brand-section ptb-120 position-relative z-1 overflow-hidden">
+        <span class="overlay-bg position-absolute start-0 top-0 w-100 h-100 z--1" data-background="{% static 'sites/assets/images/banner/brand-bg.png' %}"></span>
+        <div class="container-1700">
+            <div class="hm2-brand-box">
+                <div class="hm2-brand-slider slider-spacing">
+                    <div class="single-item">
+                        <a href="#"><img src="{% static 'sites/assets/images/brands/brand-1.svg' %}" alt="brand" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="#"><img src="{% static 'sites/assets/images/brands/brand-2.svg' %}" alt="brand" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="#"><img src="{% static 'sites/assets/images/brands/brand-3.svg' %}" alt="brand" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="#"><img src="{% static 'sites/assets/images/brands/brand-1.svg' %}" alt="brand" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="#"><img src="{% static 'sites/assets/images/brands/brand-5.svg' %}" alt="brand" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="#"><img src="{% static 'sites/assets/images/brands/brand-3.svg' %}" alt="brand" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--brand section end-->
+
+    <!--featured products section start-->
+    <section class="hm2-featured-section ptb-140">
+        <div class="container-1400">
+            <div class="row justify-content-center">
+                <div class="col-xl-6">
+                    <div class="text-center">
+                        <h2 class="fs-40 hm2-font-family mb-40 wow fadeInUp">Nouveaux Produits</h2>
+                     </div>
+                </div>
+            </div>
+            <div class="row justify-content-center g-4 mt-5">
+                
+              
+                
+                {% for produit in new_produits  %}
+
+                <div class="col-xl-4 col-lg-6">
+                    <div class="hm2-ft-product-card position-relative wow fadeInUp" data-wow-delay="0.2s">
+                        <img src="{{produit.imageUrl}}" alt="{{produit}}" class="img-fluid">
+                        <div class="products-info-box dote-bottom">
+                            <span style="background-color:orange" class="dot"></span>
+                            <div class="info-box">
+                                <a href="{{produit.url}}"><h5 class="mb-2">{{produit.titre | capfirst}}</h5></a>
+                                <p class="fw-medium text-main-color mb-4">{{produit.prix | intcomma }} XOF</p>
+                                <a style="background-color:orange" href="{{produit.url}}" class="template-btn primary-btn btn-sm text-uppercase">Voir </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                {% endfor %}
+                    
+                
+            </div>
+        </div>
+    </section>
+    <!--featured products section end-->
+
+    <!--gallery section start-->
+    <section class="hm2-gallery-section position-relative z-1 overflow-hidden">
+        <span class="circle-shape position-absolute z--1 rounded-circle"></span>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="section-title mb-70">
+                        <span class="fs-sm">@Venturi</span>
+                        <h2 class="fs-40 mt-4 hm2-font-family mb-0">Gallerie d'article</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-slider-wrapper">
+                <div class="hm2-gallery-slide-1 slider-spacing">
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/1.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/1.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/1.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/2.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/3.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/3.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/4.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/4.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/5.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/5.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/6.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/6.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                </div>
+                <div class="hm2-gallery-slide-2 slider-spacing mt-3"  dir="rtl">
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/1.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/1.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/1.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/2.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/3.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/3.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/4.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/4.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/5.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/5.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                    <div class="single-item">
+                        <a href="{% static 'sites/assets/images/gallery/6.jpg' %}" data-fancybox="gallery"><img src="{% static 'sites/assets/images/gallery/6.jpg' %}" alt="not found" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--gallery section end-->
+
+   
+
+{% endblock content %}

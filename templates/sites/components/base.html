@@ -1,0 +1,777 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderneo Home - Home Furniture & Store</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <meta name="author" content="Jean Marie Daniel Vianney Guedegbe danielguedegbe10027@gmail.com +2250748733365">
+    <!--Essential css files-->
+    <link rel="stylesheet" href="{% static 'sites/assets/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/fancybox.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'sites/assets/css/style.css' %}">
+
+    <script type="text/javascript">
+
+        var url = "{% url 'updateItem' %}"
+
+        var user = '{{request.user}}'
+        
+        function getToken(name){ 
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== ''){ 
+                var cookies = document.cookie.split(';')
+                for(var i = 0; i < cookies.length; i++){ 
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length +1) === (name + '=')){ 
+                        cookieValue = decodeURIComponent(cookie.substring(
+                            name.length + 1 
+                        ));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+        
+        function getcoockie(name){ 
+            var cookieArr = document.cookie.split(";")
+            for (var i=0; i< cookieArr.length; i++){ 
+                var cookiePair = cookieArr[i].split('=')
+                if(name==cookiePair[0].trim()){ 
+                    return decodeURIComponent(cookiePair[1])
+                }
+            }
+            return null;
+        }
+        var cart = JSON.parse(getcoockie('cart'))
+        
+        if(cart == undefined){ 
+            cart = {}
+            document.cookie = 'cart=' + JSON.stringify(cart) +    ";domain=;path=/"
+        }
+        
+    
+        
+        
+        var wish = JSON.parse(getcoockie('wish'))
+        
+        if(wish == undefined){ 
+            wish = {}
+            document.cookie = 'wish=' + JSON.stringify(wish) +    ";domain=;path=/"
+        }
+        
+
+    </script>
+
+
+    <!--favicon-->
+    <link rel="icon" href="{% static 'sites/assets/images/favicon.png' %}">
+
+    
+    <style>
+        .header-icons button,
+        .header-wishlist a,
+        .cart-icon,
+        .cart-item,
+        .cart-amount,
+        .header-toggle-btn span {
+            color: black;
+        }
+    </style>
+
+    
+    <style>
+
+        
+        #product_view_3d .modal-dialog {
+            max-width: 1300px;
+          }
+          
+          #product_view_3d .modal-dialog .modal-content {
+            padding: 24px;
+          }
+          
+          #product_view_3d .modal-dialog .btn-close {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            outline: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            z-index: 2;
+          }
+          
+          #product_view_3d .modal-dialog .vr-product-thumb {
+            height: 560px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+          }
+          
+    </style>
+
+</head>
+<body>
+
+
+    <!--preloader start-->
+    <div class="preloader">
+        <h1 class="display-1">Moderneo Home</h1>
+        <div class="preload-progress">
+            <span></span>
+        </div>
+    </div>
+    <!--preloader end-->
+
+    <!--header section start-->
+    <header class="header-section hm2-header sticky-header bg-transparent">
+        <div class="header-infobar d-none d-md-block">
+            <div class="container-1700">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="infobar-text">
+                            <p class="mb-0 text-uppercase fs-sm fw-semibold text-black">
+                                <span class="me-3">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.9062 4.3125C12.9062 3.85547 12.5547 3.46875 12.0625 3.46875C11.6055 3.46875 11.2188 3.85547 11.2188 4.3125C11.2188 4.80469 11.6055 5.15625 12.0625 5.15625C12.5547 5.15625 12.9062 4.80469 12.9062 4.3125ZM16 2.0625C16 1.14844 15.2617 0.375 14.3125 0.375H9.07422C8.47656 0.375 7.91406 0.621094 7.49219 1.04297L1.30469 7.23047C0.425781 8.10938 0.425781 9.55078 1.30469 10.4297L5.98047 15.1055C6.85938 15.9844 8.30078 15.9844 9.17969 15.1055L15.3672 8.91797C15.7891 8.49609 16 7.93359 16 7.33594V2.0625ZM14.5586 8.14453L8.37109 14.332C7.94922 14.7539 7.21094 14.7539 6.78906 14.332L2.07812 9.62109C1.65625 9.19922 1.65625 8.46094 2.07812 8.03906L8.26562 1.85156C8.47656 1.64062 8.79297 1.5 9.07422 1.5H14.3125C14.6289 1.5 14.875 1.78125 14.875 2.0625V7.33594C14.875 7.61719 14.7695 7.93359 14.5586 8.14453ZM14.5586 8.14453L15.3672 8.91797L14.5586 8.14453Z" fill="#121111"/>
+                                    </svg>
+                                </span>
+                                <a href="signup.html" class="text-black">Agencement- Construction -Services</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="d-flex align-items-center justify-content-end gap-60">
+                            <a href="{% url 'login' %}" class="infobar-link text-uppercase fs-sm fw-semibold text-black">Mon Compte</a>
+                            <div class="header-socials d-flex align-items-center justify-content-end gap-4">
+                                <a href="#" class="text-black">IG</a>
+                                <a href="#" class="text-black">FB</a>
+                                <a class="text-black" target="_blank" href="{% url 'admin:index' %}">AD</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-navbar">
+            <div class="container-1700 position-relative">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-5">
+                        <div class="logo-wrapper">
+                            <a href="{% url 'index' %}"><img src="{% static 'sites/assets/images/logo-white.png' %}" class="img-fluid" alt="logo" /></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-7 d-none d-xl-block">
+                        <nav class="header-navigation text-center text-xl-start">
+                            <ul class="text-black">
+                                <li><a class="text-black" href="{% url 'index' %}">Accueil</a></li>
+                                <li><a class="text-black" href="{% url 'shop' %}">Produits</a></li>
+                                <li><a class="text-black" href="{% url 'tracking' %}">Sur Mesure</a></li>
+                               
+                                <li><a class="text-black" href="{% url 'faq' %}">Gallerie</a></li>
+                                <li><a class="text-black" href="{% url 'contact' %}">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-xl-3 col-7">
+                        <div class="header-right d-flex align-items-center justify-content-end justify-content-xl-between gap-3 gap-sm-4 gap-lg-3">
+                            <div class="header-icons d-inline-flex align-items-center gap-prt-16 gap-32">
+                                <div class="header-search">
+                                    <button  type="button" class="header-search-btn text-black">
+                                        <i class="bi-search"></i>
+                                        
+                                    </button>
+                                </div>
+                              
+                                <div class="header-cart">
+                                    <span class="cart-icon">
+                                        <i class="bi-cart"></i>
+                                        <sub class="cart-item text-white">{{cartItems}}</sub>
+                                    </span>
+                                    <span class="text-black cart-amount fw-medium text-main-color ms-3 d-none d-xl-inline-block">{{order.get_cart_total | intcomma}} XOF</span>
+                                </div>
+                            </div>
+                            <div class="header-toggle">
+                                <button style="color: black !important;" class="header-toggle-btn offcanvus-toggle d-none d-xl-inline-block">
+                                    <i class="bi bi-toggle-on"></i>
+                                </button>
+                                <button style="color: black !important;" class="header-toggle-btn mobile-menu-toggle d-xl-none">
+                                    <i class="bi bi-toggle-off"></i>
+                                </button>
+                            </div>
+                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--header section end-->
+
+    <!--header serch box start-->
+    <div class="header-search-box">
+        <form method="get" action="{% url 'shop' %}">
+            <label class="position-relative">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" name="search" placeholder="Rechercher ici..." value="{{ request.GET.search }}" >
+            </label>            
+        </form>
+        <a href="javascript:void(0)" class="search-close"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+    <!--header search box end-->
+
+
+    <!--mobile menu start-->
+    <div class="mobile-menu">
+        <a href="javascript:void(0)" class="close"><i class="fas fa-xmark"></i></a>
+        <a href="#" class="logo py-3"><img src="{% static 'sites/assets/images/logo-white.png' %}" alt="logo" class="img-fluid"></a>
+        <ul class="mobile-nav-menu">
+            <li><a href="{% url 'index' %}">Accueil</a></li>
+            <li><a href="{% url 'shop' %}">Produits</a></li>
+            <li><a href="{% url 'tracking' %}">Sur Mesure</a></li>
+            <li><a href="{% url 'faq' %}">Gallerie</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'login' %}">Mon Compte</a></li>
+        </ul>
+    </div>
+    <!--mobile menu end-->
+
+
+    <!--cart drawer start-->
+    <div class="cart-drawer position-fixed">
+        <div class="drawer-close d-flex align-items-center justify-content-between position-absolute start-0 top-0 w-100 px-4 py-4 border-bottom">
+            <h6 class="mb-0 fw-medium">Votre Panier ({{cartItems}})</h6>
+            <a href="javascript:void(0)" class="drawer-close"><i class="fas fa-xmark"></i></a>
+        </div>
+        <ul class="cart-list">
+
+            {% for item in items  %}
+            <li class="d-flex align-items-center gap-3">
+                <div class="feature-image light-bg">
+                    <a href="{{item.Produit.url}}"><img src="{{item.Produit.imageUrl}}" alt="feature image" class="img-fluid"></a>
+                </div>
+                <div class="d-flex justify-content-between gap-3 w-100">
+                    <div>
+                        <a href="{{item.Produit.url}}"><h6 class="mb-1">{{item.Produit.titre | capfirst}}</h6></a>
+                        <span class="price fw-medium secondary-text-color d-block mb-1 fs-sm">{{item.price | intcomma}} XOF</span>
+                        <div class="quantity d-flex align-items-center">
+                            <input type="text" value="{{item.quantity}}">
+                            <div class="step-btns">
+                                <button data-product={{item.Produit.id}} data-action="add" class="increment update-cart"><i class="fa-solid fa-angle-up"></i></button>
+                                <button data-product={{item.Produit.id}} data-action="remove" class="decrement update-cart"><i class="fa-solid fa-angle-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a data-product={{item.Produit.id}} data-action="delete" class="update-cart close"><i class="fas fa-xmark"></i></a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+
+        </ul>
+        <div class="drawer-bottom border-top">
+            <div class="d-flex align-items-center justify-content-between">
+                <h6 class="mb-0">Total:</h6>
+                <span class="fw-semibold text-main-color">{{order.get_cart_total | intcomma}} XOF</span>
+            </div>
+            {% comment %} <div class="progress-line">
+                <div class="progress-fill">
+                    <span>73%</span>
+                </div>
+            </div>
+            <p class="mt-4 fs-sm">Spend <span class="text-main-color">$125.00</span> to reach <span class="text-main-color">Free Shipping</span></p> {% endcomment %}
+            <a style="background-color:orange" href="{% url 'cart' %}" class="template-btn primary-btn text-uppercase fw-semibold w-100 text-center mt-4"><span>Voir le Panier</span></a>
+            <a href="checkout.html" class="template-btn outline-btn text-uppercase fw-semibold w-100 text-center mt-3">Finaliser</a>
+        </div>
+    </div>
+    <!--cart drawer end-->
+
+
+    <!--offcanvus start-->
+    <div class="offcanvus-box position-fixed bg-white">
+        <a href="javascript:void(0)" class="offcanvus-close"><i class="fa-solid fa-xmark"></i></a>
+        <div class="content-top">
+           
+            <p class="mb-0 mt-32 fw-light">Abidjan Côte d'Ivoire , Cocody  Angré Château moderneoh@gmail.com <br> +225 07 47 67 18 20  <br> +225 07 11 62 12 57</p>
+        </div>
+        <div class="offcanvus-gallery d-flex align-items-center flex-wrap">
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-1.jpg' %}" alt="not found"></a>
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-2.jpg' %}" alt="not found"></a>
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-3.jpg' %}" alt="not found"></a>
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-4.jpg' %}" alt="not found"></a>
+        </div>
+        <div class="offcanvus-newsletter">
+            <h4 class="mb-4 text-center">Newsletter</h4>
+            <form action="#">
+                <input type="email" placeholder="Enter your e-mail" class="theme-input">
+                <button type="submit" class="template-btn primary-btn mt-3 w-100"><span>SUBSCRIBE NOW</span></button>
+            </form>
+        </div>
+        <div class="offcanvus-bottom d-flex align-items-center justify-content-between">
+            <div class="language-switcher">
+                <div class="dropdown">
+                    <button type="button" data-bs-toggle="dropdown">English <span><i class="fas fa-angle-down"></i></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Bangla</a></li>
+                        <li><a href="#">Hindi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="currency-switcher">
+                <select>
+                    <option>USD</option>
+                    <option>BDT</option>
+                    <option>CNY</option>
+                </select>
+            </div>
+            <div class="user-links">
+                <a href="{% url 'login' %}"><span class="me-2"><i class="fa-regular fa-user"></i></span>Account</a>
+            </div>
+        </div>
+    </div>
+    <!--offcanvus end-->
+
+    
+    <!--cart drawer start-->
+    <div class="cart-drawer position-fixed">
+        <div class="drawer-close d-flex align-items-center justify-content-between position-absolute start-0 top-0 w-100 px-4 py-4 border-bottom">
+            <h6 class="mb-0 fw-medium">Votre Panier ({{cartItems}})</h6>
+            <a href="javascript:void(0)" class="drawer-close"><i class="fas fa-xmark"></i></a>
+        </div>
+        <ul class="cart-list">
+            
+            {% for item in items  %}
+            <li class="d-flex align-items-center gap-3">
+                <div class="feature-image light-bg">
+                    <a href="{{item.Produit.url}}"><img src="{{item.Produit.imageUrl}}" alt="feature image" class="img-fluid"></a>
+                </div>
+                <div class="d-flex justify-content-between gap-3 w-100">
+                    <div>
+                        <a href="{{item.Produit.url}}"><h6 class="mb-1">{{item.Produit.titre | capfirst}}</h6></a>
+                        <span class="price fw-medium secondary-text-color d-block mb-1 fs-sm">{{item.price | intcomma}} XOF</span>
+                        <div class="quantity d-flex align-items-center">
+                            <input type="text" value="{{item.quantity}}">
+                            <div class="step-btns">
+                                <button data-product={{item.Produit.id}} data-action="add" class="increment update-cart"><i class="fa-solid fa-angle-up"></i></button>
+                                <button data-product={{item.Produit.id}} data-action="remove" class="decrement update-cart"><i class="fa-solid fa-angle-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a data-product={{item.Produit.id}} data-action="delete" class="close update-cart"><i class="fas fa-xmark"></i></a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+
+        </ul>
+        <div class="drawer-bottom border-top">
+            <div class="d-flex align-items-center justify-content-between">
+                <h6 class="mb-0">Total:</h6>
+                <span class="fw-semibold text-main-color">{{order.get_cart_total | intcomma}} XOF</span>
+            </div>
+            {% comment %} <div class="progress-line">
+                <div class="progress-fill">
+                    <span>73%</span>
+                </div>
+            </div>
+            <p class="mt-4 fs-sm">Spend <span class="text-main-color">$125.00</span> to reach <span class="text-main-color">Free Shipping</span></p> {% endcomment %}
+            <a style="background-color:orange" href="{% url 'cart' %}" class="template-btn primary-btn text-uppercase fw-semibold w-100 text-center mt-4"><span>Voir le Panier</span></a>
+            <a href="{% url 'checkout' %}" class="template-btn outline-btn text-uppercase fw-semibold w-100 text-center mt-3">Finaliser</a>
+        </div>
+    </div>
+    <!--cart drawer end-->
+        
+    <!--offcanvus start-->
+    <div class="offcanvus-box position-fixed bg-white">
+        <a href="javascript:void(0)" class="offcanvus-close"><i class="fa-solid fa-xmark"></i></a>
+        <div class="content-top">
+           
+            <p class="mb-0 mt-32 fw-light">Abidjan Côte d'Ivoire , Cocody  Angré Château moderneoh@gmail.com <br> +225 07 47 67 18 20  <br> +225 07 11 62 12 57</p>
+        </div>
+        <div class="offcanvus-gallery d-flex align-items-center flex-wrap">
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-1.jpg' %}" alt="not found"></a>
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-2.jpg' %}" alt="not found"></a>
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-3.jpg' %}" alt="not found"></a>
+            <a href="javascript:void(0)"><img src="{% static 'sites/assets/images/gallery/sidebar-item-4.jpg' %}" alt="not found"></a>
+        </div>
+        <div class="offcanvus-newsletter">
+            <h4 style="color:orange" class="mb-4 text-center">Newsletter</h4>
+            <form action="#">
+                <input type="email" placeholder="Entrez votre e-mail" class="theme-input">
+                <button style="background-color:orange" type="submit" class="template-btn primary-btn mt-3 w-100"><span>SOUSCRIRE</span></button>
+            </form>
+        </div>
+        <div class="offcanvus-bottom d-flex align-items-center justify-content-between">
+            <div class="language-switcher">
+                <div class="dropdown">
+                    <button type="button" data-bs-toggle="dropdown">English <span><i class="fas fa-angle-down"></i></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Bangla</a></li>
+                        <li><a href="#">Hindi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="currency-switcher">
+                <select>
+                    <option>USD</option>
+                    <option>BDT</option>
+                    <option>CNY</option>
+                </select>
+            </div>
+            <div class="user-links">
+                <a href="{% url 'login' %}"><span class="me-2"><i class="fa-regular fa-user"></i></span>Account</a>
+            </div>
+        </div>
+    </div>
+    <!--offcanvus end-->
+        {% block content %}
+            
+        {% endblock content %}
+            
+
+    <!--hm2 feature section start-->
+    <section class="hm2-feature-section overflow-hidden">
+        <div class="container-1400">
+            <div class="row align-items-center g-5">
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="hm2-feature-box wow fadeInUp">
+                        <span class="icon-wrapper d-inline-flex align-items-center justify-content-center rounded-circle">
+                            <img src="{% static 'sites/assets/images/icons/1.svg' %}" alt="not found" class="img-fluid">
+                        </span>
+                        <h6 class="fw-normal hm2-font-family mt-40 mb-4">Livraison gratuite</h6>
+                       
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="hm2-feature-box wow fadeInUp" data-wow-delay="0.2s">
+                        <span class="icon-wrapper d-inline-flex align-items-center justify-content-center rounded-circle">
+                            <img src="{% static 'sites/assets/images/icons/2.svg' %}" alt="not found" class="img-fluid">
+                        </span>
+                        <h6 class="fw-normal hm2-font-family mt-40 mb-4">Retours sous 90 jours</h6>
+                        
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="hm2-feature-box wow fadeInUp" data-wow-delay="0.4s">
+                        <span class="icon-wrapper d-inline-flex align-items-center justify-content-center rounded-circle">
+                            <img src="{% static 'sites/assets/images/icons/3.svg' %}" alt="not found" class="img-fluid">
+                        </span>
+                        <h6 class="fw-normal hm2-font-family mt-40 mb-4">Paiement sécurisé</h6>
+                       
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="hm2-feature-box wow fadeInUp" data-wow-delay="0.6s">
+                        <span class="icon-wrapper d-inline-flex align-items-center justify-content-center rounded-circle">
+                            <img src="{% static 'sites/assets/images/icons/4.svg' %}" alt="not found" class="img-fluid">
+                        </span>
+                        <h6 class="fw-normal hm2-font-family mt-40 mb-4">Garantie 100%</h6>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--hm2 feature section end-->
+
+
+    <!--footer section start-->
+    <footer class="footer-style-2 pt-140 overflow-hidden position-relative footer-mobile-accordion">
+        <div class="container-1240">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-10">
+                    <div class="hm2-footer-top text-center">
+                        <h3 class="mb-60 hm2-font-family fw-normal">Rejoignez notre newsletter</h3>
+                        <form class="hm2-sb-form" action="#">
+                            <input type="email" placeholder="Votre email*" />
+                            <button style="background-color:orange" type="submit" class="template-btn primary-btn">Rejoindre<span class=""><i class="fa-regular fa-envelope"></i></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6">
+                    <div class="hm2-footer-widget">
+                        <h5 class="mb-40 fw-medium text-capitalize">Salle d'exposition et magasin</h5>
+                        <div class="footer-address">
+                            <a href="tel:+2250747671820">+225 07 47 67 18 20</a><br>
+                            <a href="tel:+2250711621257">+225 07 11 62 12 57</a><br>
+                            <a href="mailto:moderneoh@gmail.com" class="mail">moderneoh@gmail.com</a>
+                            <p class="mt-32">Abidjan Côte d'Ivoire , Cocody  Angré Château</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 offset-xl-1 col-sm-6">
+                    <div class="footer-widget footer-nav-widget">
+                        <h5 class="widget-title mb-40 fw-medium text-capitalize">Page Rapide</h5>
+                        <ul class="footer-links">
+                            <li><a href="{% url 'index' %}">Accueil</a></li>
+                            <li><a href="{% url 'shop' %}">Produits</a></li>
+                           
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-2 offset-xl-1 col-sm-6">
+                    <div class="footer-widget footer-nav-widget">
+                        <h5 class="widget-title mb-40 fw-medium text-capitalize">Client</h5>
+                        <ul class="footer-links">
+                            <li><a href="{% url 'tracking' %}">Sur Mesure</a></li>
+                            <li><a href="{% url 'faq' %}">Gallerie</a></li>
+                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-2 offset-xl-1 col-sm-6">
+                    <div class="footer-widget footer-nav-widget">
+                        <h5 class="widget-title mb-40 fw-medium text-capitalize">Profile</h5>
+                        <ul class="footer-links">
+                            <li><a href="{% url 'login' %}">Mon Compte</a></li>
+                            <li><a href="{% url 'cart' %}">Mon Panier</a></li>
+                            <li><a href="#">Modernoe Home</a></li>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="hm2-footer-copyright">
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-6">
+                        <p class="mb-0 fs-sm">&copy; <a href="{% url 'index' %}"> {% now "Y" %} Moderneo Home</a>. Tous droits réservés</p>
+                    </div>
+                    <div class="col-xl-6">
+                        <p class="mb-0 fs-sm">Nous utilisons des cookies pour vous offrir la meilleure expérience sur notre site Web. <a href="#" class="text-main-color text-decoration-underline">Paramètres des cookies</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="hm2-scrolltop">REMONTER<span class="ms-2"><i class="fas fa-arrow-right"></i></span></a>
+    </footer>
+    <!--footer section end-->
+
+        <!-- Modal -->
+        <div class="modal fade" id="product_view">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="vr-product-double-slider">
+                                <div class="vr-product-thumb position-relative">
+                                    {% if produit.en_promo %}
+                                    <span class="badge sale-badge">-{{produit.pourcentage_promo}}%</span>
+                                    {% endif %}
+                                    <div class="vr-poroduct-single">
+                                        <img id="productModalImage" alt="product" class="img-fluid mood-multiply d-inline-block">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="vr-product-details-content mt-5 mt-xl-0">
+                                <h3 id="productModalTitle" class="mb-4 fw-semibold"></h3>
+                                <div class="product-rating">
+                                    <ul class="rating-star d-inline-flex">
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                    </ul>
+                                    <span class="fs-sm"></span>
+                                </div>
+                                <h5 id="productModalPrice" class="mb-0 mt-30"></h5>
+                                <p id="productModalDescription" class="mb-40 mt-30"></p>
+                                {% comment %} <div class="color-variant">
+                                    <span class="fs-sm text-uppercase text-main-color fw-medium">Color</span>
+                                    <ul class="color-list mt-20">
+                                        <li class="red"><a href="#"></a></li>
+                                        <li class="blue"><a href="#"></a></li>
+                                        <li class="green"><a href="#"></a></li>
+                                    </ul> {% endcomment %}
+                                </div>
+                                <div class="d-flex align-items-center mt-30 gap-3">
+                                  
+                                
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal End-->
+
+    
+    
+
+<!-- Inclure Bootstrap JS dans le modèle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Bloc de script pour gérer l'affichage des détails -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var productModal = new bootstrap.Modal(document.getElementById('product_view'));
+
+        // Sélectionner tous les boutons qui ouvrent le modal
+        var detailButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+
+        // Ajouter un gestionnaire d'événement à chaque bouton
+        detailButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Récupérer les données à partir des attributs data-*
+                var titre = this.getAttribute('data-titre');
+                var prix = this.getAttribute('data-prix');
+                var description = this.getAttribute('data-description');
+                var image = this.getAttribute('data-image');
+                var url = this.getAttribute('data-url');
+
+                // Mettre à jour le contenu du modal avec les données
+                document.getElementById('productModalImage').src = image;
+              
+                document.getElementById('productModalTitle').innerText = titre;
+                document.getElementById('productModalPrice').innerText = prix;
+                document.getElementById('productModalDescription').innerText = description;
+
+                // Afficher le modal
+                productModal.show();
+            });
+        });
+    });
+</script>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+      
+    <!--Esential Js Files-->
+    <script src="{% static 'sites/assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'sites/assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'sites/assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'sites/assets/js/slick.js' %}"></script>
+    <script src="{% static 'sites/assets/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'sites/assets/js/nice-select.js' %}"></script>
+    <script src="{% static 'sites/assets/js/fancybox.js' %}"></script>
+    <script src="{% static 'sites/assets/js/countdown.min.js' %}"></script>
+    <script src="{% static 'sites/assets/js/wow.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'sites/assets/js/progress-bar.js' %}"></script>
+    <script src="{% static 'sites/assets/js/parallax.js' %}"></script>
+    <script src="{% static 'sites/assets/js/tilt-js.js' %}"></script>
+    <script src="{% static 'sites/assets/js/magnific-popup.js' %}"></script>
+    <script src="{% static 'sites/assets/js/waypoints.js' %}"></script>
+    <script src="{% static 'sites/assets/js/counterup.min.js' %}"></script>
+    <script src="{% static 'sites/assets/js/preloader.js' %}"></script>
+    <script src="{% static 'sites/assets/js/isotop.min.js' %}"></script>
+    <script src="{% static 'sites/assets/js/jquery.zoom.js' %}"></script>
+    <script src="{% static 'sites/assets/js/script.js' %}"></script>
+    <script src="{% static 'sites/assets/js/cart.js' %}"></script>
+
+    {% if three %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.js" integrity="sha512-HCh7TuJvWZ35Ixo/afKeBRbAUtnqQWOrpw5Fs1bdWjWILg175hy9XRmuqG/vWyAqBKvUZStGMAsqKmYKqP91YQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.js" integrity="sha512-D/H4UbEHZ2kTQjnKyESexnqZYe5+0SWtiD/Fu90+aMffVFZa1XcZ/4wvuQMPScpk5PeDD/0V64JWNN1bpyyFVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Créez une scène
+        var scene = new THREE.Scene();
+    
+        // Créez une caméra
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+    
+        // Créez un rendu
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+    
+        // Chargez le fichier DFX
+        var loader = new THREE.DFXLoader();
+        loader.load('path/to/your/file.dfx', function (dfx) {
+            // Ajoutez le fichier DFX à la scène
+            scene.add(dfx);
+        });
+    
+        // Animation de la scène
+        var animate = function () {
+            requestAnimationFrame(animate);
+    
+            // Ajoutez des animations, des rotations, etc. ici
+    
+            renderer.render(scene, camera);
+        };
+    
+        animate();
+    </script>
+
+    
+    {% endif %}
+
+    
+    {% if listed %}
+
+    <script>
+        function updateFormMethod() {
+            var selectedValue = $("#selectSortBy").val();
+            if (selectedValue) {
+                $("#sortForm").attr("method", "post");
+                // Optionally, you can submit the form automatically after changing the method
+                // $("#sortForm").submit();
+            } else {
+                $("#sortForm").attr("method", "get");
+            }
+        }
+    </script>
+        
+    {% endif %}
+        
+    
+</body>
+
+</html>

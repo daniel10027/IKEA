@@ -1,0 +1,27 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <!--login area start-->
+    <div class="login-area ptb-120 bg-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6">
+                    <form class="theme-form">
+                        <h3 class="mb-40">Connexion</h3>
+                        <input type="text" placeholder="E-mail" class="theme-input">
+                        <input type="password" placeholder="Mot de Passe *" class="theme-input mt-3">
+                        <div class="forgot-password d-flex align-items-center justify-content-between gap-2 mt-32 flex-wrap">
+                            <label class="mb-0"><input type="checkbox"> Se Souvenir de moi</label>
+                            <a href="#" class="text-main-color">Mot de passe oublié ?</a>
+                        </div>
+                        <button style="background-color:orange" type="submit" class="template-btn primary-btn w-100 mt-32"><span>Connexion</span></button>
+                        <p class="mb-0 mt-32">Pas de Compte ? <a href="{% url 'signup' %}" class="text-main-color">Inscription</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}

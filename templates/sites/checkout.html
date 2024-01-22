@@ -1,0 +1,115 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+
+    <!--breadcrumb section start-->
+    <div class="breadcrumb-section pt-40 pb-40">
+        <div class="container-1700">
+            <p class="breadcrumb-text mb-0"><a href="{% url 'index' %}">Accueil</a> / <span class="text-main-color">Paiement</span></p>
+        </div>
+    </div>
+    <!--breadcrumb section end-->
+
+    <!--checkout section start-->
+    <section class="checkout-section bg-white ptb-120">
+        <div class="container">
+            <form class="checkout-form mt-80">
+            
+                    <div class="col-xl-12">
+                        <h3 class="mb-4">Votre commande    <a style="color:orange"  href="{% url 'cart' %}">(Modifier)</a></h3>
+                        <div class="order-table table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Produits</th>
+                                    <th>Prix</th>
+                                </tr>
+                               
+                               {% for item in items  %}
+
+                               <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-4 product-box">
+                                        <div class="feature-image light-bg">
+                                            <a href="{{item.Produit.url}}"><img src="{{item.Produit.imageUrl}}" class="img-fluid" alt="product"></a>
+                                        </div>
+                                        <div>
+                                            <span class="fs-sm text-uppercase secondary-text-color d-block">Quantité : {{item.quantity}}</span>
+                                            <a href="{{item.Produit.url}}" class="product-title h6 mt-2 d-block">{{item.Produit.titre | capfirst}}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="text-main-color-color fw-medium pp-price">{{item.price | intcomma}} XOF</span>
+                                </td>
+                            </tr>
+                                
+                               {% endfor %}
+                                
+                              
+                                <tr>
+                                    <td>
+                                        <span class="text-main-color fw-medium pp-price">Sous Total</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-main-color fw-medium pp-price">{{order.get_cart_total | intcomma}} XOF</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="text-main-color fw-medium pp-price">Livraison</span>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 pp-price">Faris : <span class="text-main-color fw-medium">0 XOF</span></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="text-main-color fw-medium pp-price">Total</span>
+                                    </td>
+                                    <td>
+                                        <span class="secondary-text-color fw-meidum pp-price">{{order.get_cart_total | intcomma}} XOF</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-0">
+                                    <td colspan="2" class="border-0">
+                                        <div class="checkout-payment-methods">
+                                            <label>
+                                                <input type="radio" name="payment-method">
+                                                <span class="radio">Virement bancaire direct</span>
+                                                <span class="description mb-0 fw-light fs-sm text-color">Effectuez votre paiement directement sur notre compte bancaire. Veuillez utiliser votre numéro de commande comme référence de paiement. Votre commande ne sera pas expédiée tant que les fonds n'auront pas été crédités sur notre compte.</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="payment-method">
+                                                <span class="radio">Paiements par chèque</span>
+                                                <span class="description mb-0 fw-light fs-sm text-color">Effectuez votre paiement directement sur notre compte bancaire. Veuillez utiliser votre numéro de commande comme référence de paiement. Votre commande ne sera pas expédiée tant que les fonds n'auront pas été crédités sur notre compte.</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="payment-method">
+                                                <span class="radio">Paiement à la livraison</span>
+                                                <span class="description mb-0 fw-light fs-sm text-color">Paiement à la livraison</span>
+                                            </label>
+                                           
+                                            <p class="mt-32 text-color fw-light fs-sm">Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur ce site Web et à d'autres fins décrites dans notre politique de confidentialité.</p>
+                                            <label class="d-flex align-items-center gap-2"><input type="checkbox"><span class="text-color fw-light fs-sm checkbox"> J'ai lu et j'accepte les termes et conditions *</span></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-0">
+                                    <td colspan="2" class="border-0">
+                                        <button style="background-color:orange" type="submit" class="template-btn primary-btn w-100 text-uppercase fw-normal overflow-hidden">Passer la commande</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!--checkout section end-->
+
+    {% endblock content %}

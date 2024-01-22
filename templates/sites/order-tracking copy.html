@@ -1,0 +1,37 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+
+{% block content %}
+    
+
+<section class="hm2-hero-section position-relative z-1 overflow-hidden">
+</section>
+
+    
+
+    <!--breadcrumb section start-->
+    <div class="breadcrumb-section pt-40 pb-40">
+        <div class="container-1700">
+            <p class="breadcrumb-text mb-0"><a href="{% url 'index' %}">Accueil</a> / <span class="text-main-color">Suivi de Commande</span></p>
+        </div>
+    </div>
+    <!--breadcrumb section end-->
+
+    <!--order tracking start-->
+    <div class="order-tracking ptb-120 bg-white">
+        <div class="container">
+            <form class="theme-form">
+                <label for="id_number">Entrez le numéro d'Ordre </label>
+                <input type="text" placeholder="Merci de Saisir le numéro d'ordre de votre Colis" class="theme-input" id="id_number">
+                <button type="submit" class="template-btn primary-btn d-block w-100 text-uppercase fw-normal mt-40"><span>Suivre la Commande</span></button>
+            </form>
+            <div class="help-box mt-40 d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                <p class="text-main-color text-uppercase mb-0">Do you need help?</p>
+                <p class="text-uppercase mb-0">Call us <a href="tel:2564214569" class="text-main-color">+2564 214569</a> or drop us a message at <a href="mailto:info@venturi.com" class="text-main-color">info@venturi.com</a></p>
+            </div>
+        </div>
+    </div>
+    <!--order tracking end-->
+
+
+    {% endblock content %}

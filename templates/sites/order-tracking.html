@@ -1,0 +1,47 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <!--breadcrumb section start-->
+    <div class="breadcrumb-section pt-40 pb-40">
+        <div class="container-1700">
+            <p class="breadcrumb-text mb-0"><a href="{% url 'index' %}">Accueil</a> / <span class="text-main-color">Sur Mésure</span></p>
+        </div>
+    </div>
+    <!--breadcrumb section end-->
+
+    
+
+    <!--contact form section start-->
+    <section class="contact-form-section pt-120 pb-140 overflow-hidden">
+        <div class="container-1700">
+            <div class="row align-items-center g-5">
+                </div>
+                <div class="col-xl-12 col-md-12">
+                    <div class="ct-form--wrapper">
+                        <h2 class="fs-40 fw-regular hm2-font-family mb-30">Besoin d'un meuble sur mésure ? </h2>
+
+                        {% if request.GET.success %}
+                        <div class="alert alert-success" role="alert">
+                            <p>Votre demande a été envoyée avec succès. Nous vous contacterons dans un bref délai.</p>
+                        </div>
+                    {% endif %}
+                        <p class="mb-50">Nous proposons des meubles sur mesure pour répondre à vos besoins uniques ! Contactez-nous pour discuter de vos idées et
+                             obtenir des meubles personnalisés qui correspondent parfaitement à votre style et à votre espace.</p>
+                        <form method="POST" class="ct-contact-form" action="{% url 'tracking' %}">
+                            {% csrf_token %}
+                            <input type="text" name="name" class="theme-input" placeholder="Votre Nom*">
+                            <input type="tel"  name="contact" class="theme-input" placeholder="Votre Contact*">
+                            <textarea name="message" class="theme-input" placeholder="Expliquez nous vos besoins  *" rows="6"></textarea>
+                            <button style="background-color:orange" type="submit" class="template-btn primary-btn">Envoyer la demande</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--contact form section end-->
+
+    {% endblock content %}
