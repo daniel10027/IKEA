@@ -1,0 +1,89 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+    <!--breadcrumb section start-->
+    <div class="breadcrumb-section pt-40 pb-40">
+        <div class="container-1700">
+            <p class="breadcrumb-text mb-0"><a href="{% url 'index' %}">Accueil</a> / <span class="text-main-color">Mon Compte</span></p>
+        </div>
+    </div>
+    <!--breadcrumb section end-->
+
+
+    <!---cart table start-->
+    <div class="ptb-120 bg-white">
+        <div class="container">
+            <div class="col-xl-5">
+                <div class="section-title text-center text-xl-start mb-32 mb-xl-0">
+                    <h2 class="fs-40 hm2-font-family">N° XC0{{orderDetails.id}}</h2>
+                </div>
+            </div>
+            <br>
+            <div class="cart-table-wrapper table-responsive">
+
+                <table class="cart-table table">
+
+                    <tr>
+                        <th class="text-center">Produit <b>({{orderDetails.get_cart_items}})</b></th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                            
+
+                        <th class="text-end">Sous Total</th>
+                    </tr>
+                    
+                    
+                    {% for item in orderDetails.items  %}
+
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-4 product-box">
+                                <div class="feature-image light-bg">
+                                    <img src="{{item.Produit.imageUrl}}" class="img-fluid" alt="product">
+                                </div>
+                                <div>
+                                    <span class="fs-sm text-uppercase secondary-text-color d-block">{{item.Produit.categorie | capfirst}}</span>
+                                    <a href="{{item.Produit.url}}" class="product-title h6 mt-2 d-block">{{item.Produit.titre | capfirst}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-medium text-main-color">{{item.price | intcomma}} XOF</span>
+                        </td>
+                        <td>
+                            <span class="fw-medium text-main-color">{{item.quantity}}</span>
+                        </td>
+                        <td>
+                            <span class="text-main-color fw-medium d-block text-end">{{item.get_total | intcomma}} XOF</span>
+                        </td>
+                    </tr>
+                        
+                    {% endfor %}
+                        
+               
+                    <tr>
+                        <td colspan="4">
+                            <div class="d-flex align-items-center justify-content-between gap-4 flex-wrap" style="float:right">
+                                <form class="cart-coupon-form d-flex align-items-center">
+                                    Total : <a href="#" class="product-title h6 mt-2 d-block">{{orderDetails.get_cart_total | intcomma}} XOF </a>
+                                    <br>
+                                     <a href="#" class="product-title h6 mt-2 d-block">{{orderDetails.customer.user.first_name}}</a>
+                                     <br>
+                                     <a href="#" class="product-title h6 mt-2 d-block">{{orderDetails.customer.user.last_name}}</a>
+                                </form>
+                            
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <!--cart table end-->
+
+   
+    {% endblock content %}

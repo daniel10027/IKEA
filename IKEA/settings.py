@@ -177,3 +177,10 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "devs.iipea@gmail.com"
 EMAIL_HOST_PASSWORD = "dywlmgvvhhkffhju"
 EMAIL_PORT = 587
+
+
+
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = 'index'

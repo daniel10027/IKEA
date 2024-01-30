@@ -48,6 +48,10 @@ class Order(models.Model):
         return total
     
     @property
+    def items(self):
+        return self.order_itmes.all()
+    
+    @property
     def shipping(self):
         return True
 

@@ -68,7 +68,17 @@
 
     <!--products filter start-->
     <section class="hm2-filter-products ptb-140">
+       
         <div class="container-1400">
+           
+           {% if messages %}
+           <div class="alert alert-success" role="alert">
+            {% for message in messages  %}
+                {{message}}
+            {% endfor %}
+        </div>
+           {% endif %}
+            
             <div class="row align-items-center">
                 <div class="col-xl-5">
                     <div class="section-title text-center text-xl-start mb-32 mb-xl-0">

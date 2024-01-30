@@ -4,13 +4,15 @@ from .views import (
     contact,
     faq,
     index,
-    tracking
+    tracking, 
+    construction
 
 )
 
 urlpatterns = [
     
     path('', index, name='index'),
+    path('construction/', construction, name='construction'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('gallerie/', faq, name='faq'),

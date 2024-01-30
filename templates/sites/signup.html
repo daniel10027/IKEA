@@ -9,16 +9,27 @@
     <div class="login-area ptb-120 bg-white">
         <div class="container">
             <div class="row justify-content-center">
+              
+              {% if messages %}
+
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages  %}
+                    {{message}}
+                {% endfor %}
+            </div>
+                
+              {% endif %}
+                
                 <div class="col-xl-6">
-                    <form class="theme-form">
+                    <form class="theme-form" method="POST" action="{% url 'signup' %}">
+                        {% csrf_token %}
                         <h3 class="mb-40">Inscription</h3>
-                        <input type="text"  name="firstname" placeholder="Nom" class="theme-input">
+                        <input type="text"  required name="firstname" placeholder="Nom Complet" class="theme-input">
                         <br>
-                        <input type="text" name="lastname"  placeholder="Prénoms" class="theme-input">
-                        <input type="text" name="email" placeholder="E-mail" class="theme-input mt-3">
-                        <input type="tel" name="contact"  placeholder="Contact" class="theme-input mt-3">
-                        <input type="password" name="password" placeholder="Password*" class="theme-input mt-3">
-                        <input type="password" name="password2" placeholder="Password*" class="theme-input mt-3">
+                        <input type="email" required name="username" placeholder="E-mail" class="theme-input mt-3">
+                        <input type="tel" required  name="lastname"  placeholder="Contact" class="theme-input mt-3">
+                        <input type="password" required name="password" placeholder="Mot de Passe*" class="theme-input mt-3">
+                        <input type="password" required  name="password2" placeholder="Confirmer le Mot de Passe*" class="theme-input mt-3">
                         <div class="forgot-password d-flex align-items-center justify-content-between gap-2 mt-32">
                             <label class="mb-0"><input type="checkbox"> Acceptez les conditions et la politique de confidentialité</label>
                         </div>

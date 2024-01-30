@@ -49,8 +49,9 @@
     <!--product details start-->
     <section class="vr-prodcuct-details ptb-140">
         <div class="container">
+            
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-8">
                     <div class="vr-product-double-slider">
                         <div class="vr-product-thumb position-relative">
                           {% if produit.en_promo %}
@@ -92,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6">
+                <div class="col-xl-4">
                     <div class="vr-product-details-content mt-5 mt-xl-0">
                         <h3 class="mb-4 fw-semibold">{{produit.titre | capfirst}}</h3>
                         <div class="product-rating">
@@ -174,15 +175,21 @@
                                     <div class="vr-poroduct-single">
                                         
                                         {% if produit.fichier_3d %}
-                                        <model-viewer  
-                                        
-                                        id="description3d"
+
+                                        <model-viewer 
                                         src = "{{produit.fichier_3d.url}}"
-                                        camera-controls
-                                        autoplay
-                                        >
-                                            
-                                        </model-viewer>
+                                        id="rotera-model-viewer" 
+                                        ar-modes="webxr scene-viewer quick-look" 
+                                        ar-scale="fixed" auto-rotate="true" 
+                                        camera-controls="true" 
+                                        interaction-prompt="none" 
+                                        shadow-intensity="3" 
+                                        interpolation-decay="40" 
+                                        disable-tap="true" 
+                                        touch-action="none" 
+                                        class="rotera-model-viewer-web-component" 
+                                        ar-status="not-presenting">
+                                       </model-viewer>
 
                                         {% else %}
                                         <img id="productModalImage" alt="product" class="img-fluid mood-multiply d-inline-block">

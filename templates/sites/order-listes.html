@@ -1,0 +1,101 @@
+{% extends "sites/components/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+    <!--breadcrumb section start-->
+    <div class="breadcrumb-section pt-40 pb-40">
+        <div class="container-1700">
+            <p class="breadcrumb-text mb-0"><a href="{% url 'index' %}">Accueil</a> / <span class="text-main-color">Mon Compte</span></p>
+        </div>
+    </div>
+    <!--breadcrumb section end-->
+
+
+    <!---cart table start-->
+    <div class="ptb-120 bg-white">
+        <div class="container">
+            <div class="col-xl-5">
+                <div class="section-title text-center text-xl-start mb-32 mb-xl-0">
+                    <h2 class="fs-40 hm2-font-family">Liste Commandes</h2>
+                </div>
+            </div>
+            <br>
+            <div class="cart-table-wrapper table-responsive">
+                <table class="cart-table table">
+
+                    <tr>
+                        <th class="text-center">N°</th>
+                        <th class="text-center">Date</th>
+                        {% if user.is_staff %}
+
+                        <th>Utilisateur</th>
+                       <th>Contact</th>
+                           
+                       {% endif %}
+                        <th>Produits</th>
+                        <th>Total</th>
+                        <th class="text-end">Actions</th>
+                        <th class="text-end">STATUS</th>
+                    </tr>
+                    
+                    
+                    {% for order in all_order  %}
+
+                    <tr>
+                        <td>
+                            <span class="fw-medium text-main-color">{{forloop.counter}}</span>
+                        </td>
+                        <td>
+                            <span class="fw-medium text-main-color">{{order.created}}</span>
+                        </td>
+
+                        
+                        {% if user.is_staff %}
+
+                        <td>
+                            <span class="fw-medium text-main-color">{{order.customer.user.first_name}}</span>
+                        </td>
+                        <td>
+                            <span class="fw-medium text-main-color">{{order.customer.user.last_name}}</span>
+                        </td>
+                            
+                        {% endif %}
+                            
+                        <td>
+                            <span class="fw-medium text-main-color">{{order.get_cart_items}}</span>
+                        </td>
+                        <td>
+                            <span class="fw-medium text-main-color">{{order.get_cart_total| intcomma }} XOF</span>
+                        </td>
+                        <td>
+                            <a style="background-color:orange" href="{% url 'orderdetails' pk=order.pk  %}" type="button" class="submit-btn template-btn primary-btn">Consulter</a>
+                        </td>
+                        
+                        {% if order.livre  %}
+                        <td>
+                            Terminée & Livrée
+                        </td>
+
+                        {% else %}
+                        <td>
+                            En attente
+                        </td>
+                            
+                        {% endif %}
+                                                </tr>
+                        
+                    {% endfor %}
+                    
+                   
+                   
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <!--cart table end-->
+
+   
+    {% endblock content %}

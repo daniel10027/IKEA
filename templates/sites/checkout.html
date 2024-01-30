@@ -74,34 +74,14 @@
                                         <span class="secondary-text-color fw-meidum pp-price">{{order.get_cart_total | intcomma}} XOF</span>
                                     </td>
                                 </tr>
+                              
                                 <tr class="border-0">
                                     <td colspan="2" class="border-0">
-                                        <div class="checkout-payment-methods">
-                                            <label>
-                                                <input type="radio" name="payment-method">
-                                                <span class="radio">Virement bancaire direct</span>
-                                                <span class="description mb-0 fw-light fs-sm text-color">Effectuez votre paiement directement sur notre compte bancaire. Veuillez utiliser votre numéro de commande comme référence de paiement. Votre commande ne sera pas expédiée tant que les fonds n'auront pas été crédités sur notre compte.</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="payment-method">
-                                                <span class="radio">Paiements par chèque</span>
-                                                <span class="description mb-0 fw-light fs-sm text-color">Effectuez votre paiement directement sur notre compte bancaire. Veuillez utiliser votre numéro de commande comme référence de paiement. Votre commande ne sera pas expédiée tant que les fonds n'auront pas été crédités sur notre compte.</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="payment-method">
-                                                <span class="radio">Paiement à la livraison</span>
-                                                <span class="description mb-0 fw-light fs-sm text-color">Paiement à la livraison</span>
-                                            </label>
-                                           
-                                            <p class="mt-32 text-color fw-light fs-sm">Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur ce site Web et à d'autres fins décrites dans notre politique de confidentialité.</p>
-                                            <label class="d-flex align-items-center gap-2"><input type="checkbox"><span class="text-color fw-light fs-sm checkbox"> J'ai lu et j'accepte les termes et conditions *</span></label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-0">
-                                    <td colspan="2" class="border-0">
-                                        <button style="background-color:orange" type="submit" class="template-btn primary-btn w-100 text-uppercase fw-normal overflow-hidden">Passer la commande</button>
-                                    </td>
+                                        <form method="POST" action="{% url 'checkout' %}">
+                                            <input type="hidden" value="{{order.id}}" name="order_id"/>
+                                            <button style="float:right;background-color:orange" type="submit" class="template-btn primary-btn">Envoyer la demande</button>
+                                        </form>
+                                        </td>
                                 </tr>
                             </table>
                         </div>

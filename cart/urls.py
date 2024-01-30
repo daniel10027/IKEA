@@ -4,7 +4,8 @@ from .views import (
     cart,
     checkout,
     wishlist,
-    updateItem
+    updateItem, 
+    orderdetails
 )
 
 urlpatterns = [
@@ -13,6 +14,7 @@ urlpatterns = [
     path('checkout/', checkout, name='checkout'),
     path('wishlist/', wishlist, name='wishlist'),
     path('update_item/', updateItem, name='updateItem'),
+    path('orderdetails/ZjaHJvbWUqDggAEEUYJxg7GIAEG<int:pk>IoFMg4IABBFGCcYOxiABBiKBTIGCAEQRRg5Mg0IAhAAGIMBGLEDGIAEMgYIAxBFGDwyBggEEEUYPDIGCAUQRRg8MgYIBhBFGEEyBggHEEUYQagCALACAA&sourceid=chrome&ie=', orderdetails, name='orderdetails'),
 
      
    

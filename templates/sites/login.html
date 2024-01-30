@@ -8,11 +8,36 @@
     <div class="login-area ptb-120 bg-white">
         <div class="container">
             <div class="row justify-content-center">
+               
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                      <strong>E-mail et/ou mot de passe incorrect.</strong>
+                      <ul>
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% endif %}
+              
                 <div class="col-xl-6">
-                    <form class="theme-form">
+                    <form class="theme-form" action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
                         <h3 class="mb-40">Connexion</h3>
-                        <input type="text" placeholder="E-mail" class="theme-input">
-                        <input type="password" placeholder="Mot de Passe *" class="theme-input mt-3">
+
+                        {% if messages %}
+
+                        <div class="alert alert-success" role="alert">
+                          {% for message in messages  %}
+                              {{message}}
+                          {% endfor %}
+                      </div>
+                          
+                        {% endif %}
+                        <input type="email" id="username" name="username" placeholder="E-mail" class="theme-input">
+                        <input type="password"  id="password" name="password"  placeholder="Mot de Passe *" class="theme-input mt-3">
                         <div class="forgot-password d-flex align-items-center justify-content-between gap-2 mt-32 flex-wrap">
                             <label class="mb-0"><input type="checkbox"> Se Souvenir de moi</label>
                             <a href="#" class="text-main-color">Mot de passe oublié ?</a>

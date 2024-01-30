@@ -9,7 +9,7 @@ class UserProfile(models.Model):
     activation_key = models.CharField(max_length=40, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return str(self.id)
 
 
 # Create your models here.
@@ -33,10 +33,7 @@ class Customer(models.Model):
 
     def __str__(self):
         """Unicode representation of Customer."""
-        try:
-            return self.name 
-        except:
-            return ""
+        return ""
 
 
     def get_absolute_url(self):
