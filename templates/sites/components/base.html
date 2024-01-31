@@ -24,24 +24,28 @@
     <link rel="stylesheet" href="{% static 'sites/assets/css/style.css' %}">
     
 
-    <script  type="text/javascript">
-        var config = {
-          phone :" 2250747671820",
-          call :"Ecrivez Nous ",
-          position :"ww-right",
-          size : "ww-normal",
-          text : "Bonjour Moderneo Home",
-          type: "ww-standard",
-          brand: "",
-          subtitle: "",
-          welcome: ""
-        };
-        var proto = document.location.protocol, host = "cloudfront.net", url = proto + "//d3kzab8jj16n2f." + host;
-          var s = document.createElement("script"); s.type = "text/javascript"; s.async = true; s.src = url + "/v2/main.js";
-      
-          s.onload = function () { tmWidgetInit(config) };
-          var x = document.getElementsByTagName("script")[0]; x.parentNode.insertBefore(s, x);
-      </script>
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            bottom: 40px;
+            right: 40px;
+            background-color: orange;
+            color: #fff;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 1000;
+            transition: transform 0.2s ease-in-out;
+          }
+          
+          .whatsapp-float:hover {
+            transform: scale(1.1);
+          }
+          
+    </style>
 
 
     <script type="text/javascript">
@@ -544,6 +548,10 @@
     </section>
     <!--hm2 feature section end-->
 
+    <a href="https://wa.me/+2250711621257" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      
 
     <!--footer section start-->
     <footer class="footer-style-2 pt-140 overflow-hidden position-relative footer-mobile-accordion">
@@ -829,6 +837,8 @@
         
     
    
+
+
 
   
 </body>

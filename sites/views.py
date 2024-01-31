@@ -43,7 +43,7 @@ def contact(request):
         telephone = request.POST.get('telephone', '')
         message = request.POST.get('message', '')
 
-        destinataires = ['danielguedegbe10027@gmail.com', ]#'moderneoh@gmail.com'
+        destinataires = ['moderneoh@gmail.com', ]#'moderneoh@gmail.com'
         sujet = 'Nouvelle demande de rendez*Vous Moderneo Home'
         contenu = f'Nom: {nom}\n\nEmail: {email}\n\nTéléphone: {telephone}\n\nMessage: {message}'
         send_mail(sujet, contenu, 'moderneoh@gmail.com', destinataires, fail_silently=False)

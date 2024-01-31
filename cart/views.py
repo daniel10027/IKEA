@@ -8,6 +8,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
+from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 # Create your views here.
 def cart(request):
     if request.user.is_authenticated:
@@ -29,13 +33,11 @@ def cart(request):
     return render(request,'sites/cart.html', context=context)
 
 
-@csrf_exempt
 def checkout(request):
     if request.method == 'POST':
-            order_id = request.POST.get('order_id')
-            # Vérifier si l'ID de la commande est valide
+        # Vérifier si l'ID de la commande est valide
             try:
-                order = Order.objects.get(id=order_id, customer=request.user.customer, complete=False)
+                order = Order.objects.get(customer=request.user.customer, complete=False)
             except Order.DoesNotExist:
                 messages.error(request, 'La commande spécifiée n\'existe pas ou est déjà complète.')
                 return redirect('checkout')
@@ -43,7 +45,24 @@ def checkout(request):
             # Mettre à jour la commande et rediriger vers l'index avec un message de succès
             order.complete = True
             order.save()
-            messages.success(request, 'La commande a été soumise avec succes avec succès, vous serez contacté dans les plus Bref delais!')
+            
+            # Envoyer un e-mail avec les informations de la commande
+            destinataires = ['moderneoh@gmail.com']  # Remplacez par votre adresse e-mail
+            sujet = "Nouvelle commande d'Article Moderneo Home"
+            contenu = f'Informations de la commande:\n\n'
+            contenu += f'Client: {order.customer.user.first_name} {order.customer.user.last_name}\n'
+            contenu += f'Total de la commande: {order.get_cart_total} XOF\n\n'
+            contenu += 'Détails de la commande:\n'
+            for item in order.order_itmes.all():
+                contenu += f'Produit: {item.Produit.titre}\n'
+                contenu += f'Quantité: {item.quantity}\n'
+                contenu += f'Prix unitaire: {item.price} XOF\n'
+                contenu += f'Sous-total: {item.get_total} XOF\n\n'
+            
+            # Envoyer l'e-mail
+            send_mail(sujet, contenu, 'moderneoh@gmail.com', destinataires, fail_silently=False)
+            
+            messages.success(request, 'La commande a été soumise avec succès, vous serez contacté dans les plus brefs délais!')
             return redirect('index')
         
     if request.user.is_authenticated:

@@ -17,7 +17,6 @@
     <!--checkout section start-->
     <section class="checkout-section bg-white ptb-120">
         <div class="container">
-            <form class="checkout-form mt-80">
             
                     <div class="col-xl-12">
                         <h3 class="mb-4">Votre commande    <a style="color:orange"  href="{% url 'cart' %}">(Modifier)</a></h3>
@@ -78,6 +77,7 @@
                                 <tr class="border-0">
                                     <td colspan="2" class="border-0">
                                         <form method="POST" action="{% url 'checkout' %}">
+                                            {% csrf_token %}
                                             <input type="hidden" value="{{order.id}}" name="order_id"/>
                                             <button style="float:right;background-color:orange" type="submit" class="template-btn primary-btn">Envoyer la demande</button>
                                         </form>
@@ -87,7 +87,6 @@
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </section>
     <!--checkout section end-->
